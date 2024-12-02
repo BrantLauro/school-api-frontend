@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.screen {
+  @apply
+  w-screen h-screen bg-zinc-900 text-white
+}
+
 
 .title{
   @apply
@@ -20,8 +25,8 @@
 
 .btn{
   @apply
-  bg-sky-400 
-  hover:bg-sky-950
+  bg-green-700
+  hover:bg-green-800
   
   px-2 
   py-1 

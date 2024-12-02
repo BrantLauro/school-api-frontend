@@ -6,14 +6,14 @@ import { useNavigate } from 'react-router-dom';
 const RegisterSchema = Yup.object().shape({
   schoolName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required').matches(/[a-zA-Z]/, 'Name can only contain letters!'),
   location: Yup.string().required('Required'),
-  principalName: Yup.string().required('Required').min(8, 'Too Short!'),
+  principalName: Yup.string().required('Required').min(2, 'Too Short!'),
 });
 
-const RegisterSchool = () => {
+const indexSchool = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='w-screen h-screen bg-neutral-900 text-white'>
+    <div className='w-screen h-screen bg-zinc-600 text-white'>
       <div className="h-full flex flex-col justify-center items-center">
         <h1 className='title'>Register School</h1>
         <Formik
@@ -56,4 +56,4 @@ const RegisterSchool = () => {
   )
 }
 
-export default RegisterSchool
+export default indexSchool

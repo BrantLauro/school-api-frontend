@@ -12,7 +12,7 @@ const RegisterSchema = Yup.object().shape({
   schoolId: Yup.string().required('Required'),
 });
 
-const RegisterStudent = () => {
+const IndexStudent = () => {
   const [schools, setSchools] = useState([]);
   const navigate = useNavigate();
 
@@ -83,4 +83,4 @@ const RegisterStudent = () => {
   )
 }
 
-export default RegisterStudent
+export default IndexStudent
