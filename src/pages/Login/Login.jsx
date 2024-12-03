@@ -2,7 +2,8 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import apiuser from '../../api/apisuser';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
@@ -22,24 +23,21 @@ const Login = () => {
           onSubmit={async (values, { setSubmitting }) => {
             try {
               const result = await apiuser.post('/api/auth/login', values);
-              alert(result.data.message); // Exibe a mensagem de sucesso
+              Swal.fire({
+                icon: 'success',
+                title: 'Login bem-sucedido',
+                text: result.data.message,
+              });
+              window.localStorage.setItem('token', result.data.token); // Armazena o token
               setSubmitting(false);
-              navigate('/'); // Redireciona para a página inicial
-              // window.localStorage.setItem('token', result.data.token);
-              // setSubmitting(false);
-              // navigate('/');
-                // console.log(result);
-                // setSubmitting(false);
-                // navigate('/login');
+              navigate('/');
             } catch (error) {
-              console.error('Login error:', error);
-              alert(error.response.data || 'Invalid credentials'); // Exibe a mensagem de erro
+              Swal.fire({
+                icon: 'error',
+                title: 'Erro no login',
+                text: error.response.data || 'Invalid credentials',
+              });
               setSubmitting(false);
-              // console.error('Login error:', error);
-              // alert('Invalid credentials');
-              // setSubmitting(false);
-                // console.log(error.response.data.message);
-                // alert(JSON.stringify(error.response.data.message, null, 2));
             }
           }}
         >
@@ -49,7 +47,7 @@ const Login = () => {
               <Field type="email" name="email" className='input' />
               <ErrorMessage name="email" component="div" className='text-orange-500' />
 
-              <label htmlFor="password" className='label'>Password</label>
+              <label htmlFor="password" className='label'>Senha</label>
               <Field type="password" name="password" className='input' />
               <ErrorMessage name="password" component="div" className='text-orange-500' />
 
@@ -59,6 +57,9 @@ const Login = () => {
             </Form>
           )}
         </Formik>
+        <p className='mt-4'>
+          Não possui cadastro? <Link to="/register" className='text-blue-500'>Registre-se</Link>
+        </p>
       </div>
     </div>
   );

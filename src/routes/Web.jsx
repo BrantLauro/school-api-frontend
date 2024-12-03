@@ -7,16 +7,17 @@ import IndexSchool from '../pages/School/Index';
 import IndexStudent from '../pages/Student/Index';
 import Register from '../pages/Register/Register';
 import Login from '../pages/Login/Login';
+import PrivateRoute from './PrivateRoute';
 
 const Web = () => {
   return (
     <BrowserRouter>
         <Routes>
-            <Route path='/' element={<Home />}/>
-            <Route path='/school' element={<IndexSchool />}/>
-            <Route path='/student' element={<IndexStudent />}/>
-            <Route path='/school/create' element={<CreateSchool />}/>
-            <Route path='/student/create' element={<CreateStudent />}/>
+            <Route path='/' element={<PrivateRoute><Home /></PrivateRoute>}/>
+            <Route path='/school' element={<PrivateRoute><IndexSchool /></PrivateRoute>}/>
+            <Route path='/student' element={<PrivateRoute><IndexStudent /></PrivateRoute>}/>
+            <Route path='/school/create' element={<PrivateRoute><CreateSchool /></PrivateRoute>}/>
+            <Route path='/student/create' element={<PrivateRoute><CreateStudent /></PrivateRoute>}/>
             <Route path='/register' element={<Register />}/>
             <Route path='/login' element={<Login />}/>
         </Routes>

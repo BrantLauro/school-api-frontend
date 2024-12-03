@@ -1,7 +1,8 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import apiuser from '../../api/apisuser';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 const RegisterSchema = Yup.object().shape({
     username: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required').matches(/[a-zA-Z]/, 'Name can only contain letters!'),
@@ -15,19 +16,27 @@ const Register = () => {
   return (
     <div className='w-screen h-screen bg-neutral-900 text-white'>
       <div className="h-full flex flex-col justify-center items-center">
-        <h1 className='title'>Register</h1>
+        <h1 className='title'>Cadastro</h1>
         <Formik
           initialValues={{ username: '', email: '', password: '' }}
           validationSchema={RegisterSchema}
           onSubmit={async (values, { setSubmitting }) => {
             try {
               const resultado = await apiuser.post('/register', values);
-              console.log(resultado);
+              Swal.fire({
+                icon: 'success',
+                title: 'Registro bem-sucedido',
+                text: 'Você foi registrado com sucesso!',
+              });
               setSubmitting(false);
               navigate('/login');
             } catch (error) {
-              console.log(error.response.data.message);
-              alert(JSON.stringify(error.response.data.message, null, 2))
+              Swal.fire({
+                icon: 'error',
+                title: 'Erro no registro',
+                text: error.response?.data?.message || 'An error occurred',
+              });
+              setSubmitting(false);
             }
           }}
         >
@@ -44,12 +53,16 @@ const Register = () => {
               <label htmlFor="password" className='label'>Senha</label>
               <Field type="password" name="password" className='input'/>
               <ErrorMessage name="password" component="div" />
+
               <button type="submit" disabled={isSubmitting} className='btn'>
-                send
+                cadastrar
               </button>
             </Form>
           )}
         </Formik>
+        <p className='mt-4'>
+          Já possui cadastro? <Link to="/login" className='text-blue-500'>Faça login</Link>
+        </p>
       </div>
     </div>
   )

@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import apistudent from '../../api/apistudent';
 import apischool from '../../api/apischool';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const RegisterSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
@@ -20,7 +21,6 @@ const CreateStudent = () => {
     const fetchSchools = async () => {
       try {
         const response = await apischool.get('/school');
-        // console.log(response.data);
         setSchools(response.data);
       } catch (error) {
         console.error('Error fetching schools:', error);
@@ -40,12 +40,20 @@ const CreateStudent = () => {
           onSubmit={async(values, { setSubmitting }) => {
             try {
               const result = await apistudent.post('/student', values);
-              console.log(result);
+              Swal.fire({
+                icon: 'success',
+                title: 'Cadastro bem ucedido',
+                text: 'O estudante foi cadastrado com sucesso!',
+              });
               setSubmitting(false);
-              navigate('/login');
+              navigate('/student');
             } catch (error) {
-              console.log(error.response.data.message);
-              alert(JSON.stringify(error.response.data.message, null, 2));
+              Swal.fire({
+                icon: 'error',
+                title: 'Erro no cadastro',
+                text: error.response?.data?.message || 'An error occurred',
+              });
+              setSubmitting(false);
             }
           }}
         >
@@ -73,7 +81,7 @@ const CreateStudent = () => {
               <ErrorMessage name="schoolId" component="div" className='text-orange-500'/>
 
               <button type="submit" disabled={isSubmitting} className='btn'>
-                send
+                cadastrar
               </button>
             </Form>
           )}

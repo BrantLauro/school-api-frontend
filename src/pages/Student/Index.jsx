@@ -1,86 +1,59 @@
 import React, { useEffect, useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
 import apistudent from '../../api/apistudent';
 import apischool from '../../api/apischool';
-import { useNavigate } from 'react-router-dom';
-
-const RegisterSchema = Yup.object().shape({
-  name: Yup.string().required('Required'),
-  age: Yup.number().required('Required').min(1, 'Too Young!'),
-  gender: Yup.string().required('Required'),
-  schoolId: Yup.string().required('Required'),
-});
+import { Link } from 'react-router-dom';
 
 const IndexStudent = () => {
+  const [students, setStudents] = useState([]);
   const [schools, setSchools] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await apistudent.get('/student');
+        setStudents(response.data);
+      } catch (error) {
+        console.error('Error fetching students:', error);
+      }
+    };
+
     const fetchSchools = async () => {
       try {
         const response = await apischool.get('/school');
-        // console.log(response.data);
         setSchools(response.data);
       } catch (error) {
         console.error('Error fetching schools:', error);
       }
     };
 
+    fetchStudents();
     fetchSchools();
   }, []);
+
+  const getSchoolName = (schoolId) => {
+    const school = schools.find(school => school.id === schoolId);
+    return school ? school.schoolName : 'Unknown School';
+  };
 
   return (
     <div className='w-screen h-screen bg-neutral-900 text-white'>
       <div className="h-full flex flex-col justify-center items-center">
-        <h1 className='title'>Register Student</h1>
-        <Formik
-          initialValues={{ name:'', age: '', gender: '' , schoolId: '' }}
-          validationSchema={RegisterSchema}
-          onSubmit={async(values, { setSubmitting }) => {
-            try {
-              const result = await apistudent.post('/student', values);
-              console.log(result);
-              setSubmitting(false);
-              navigate('/login');
-            } catch (error) {
-              console.log(error.response.data.message);
-              alert(JSON.stringify(error.response.data.message, null, 2));
-            }
-          }}
-        >
-          {({ isSubmitting }) => (
-            <Form className='flex flex-col'>
-              <label htmlFor="name" className='label'>Nome</label>
-              <Field type="text" name='name' className='input'></Field>
-              <ErrorMessage name="name" component="div" className='text-orange-500'/>
-
-              <label htmlFor="age" className='label'>Idade</label>
-              <Field type="number" name="age" className='input'/>
-              <ErrorMessage name="age" component="div" className='text-orange-500'/>
-              
-              <label htmlFor="gender" className='label'>Gênero</label>
-              <Field type="text" name="gender" className='input'/>
-              <ErrorMessage name="gender" component="div" className='text-orange-500'/>
-
-              <label htmlFor="schoolId" className='label'>Escola</label>
-              <Field as="select" name="schoolId" className='input'>
-                <option value="">Selecione uma escola</option>
-                {schools.map(school => (
-                  <option key={school.id} value={school.id}>{school.schoolName}</option>
-                ))}
-              </Field>
-              <ErrorMessage name="schoolId" component="div" className='text-orange-500'/>
-
-              <button type="submit" disabled={isSubmitting} className='btn'>
-                send
-              </button>
-            </Form>
-          )}
-        </Formik>
+        <h1 className='title'>Estudantes Cadastrados</h1>
+        <Link to="/student/create" className='btn mb-4'>Cadastrar Novo Estudante</Link>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+          {students.map(student => (
+            <div key={student.id} className='card bg-gray-800 p-4 rounded-lg shadow-md'>
+              <h2 className='font-bold text-xl mb-2'>{student.name}</h2>
+              <p className='text-gray-400'>Idade: {student.age}</p>
+              <p className='text-gray-400'>Gênero: {student.gender}</p>
+              <p className='text-gray-400'>Escola: {getSchoolName(student.schoolId)}</p>
+            </div>
+          ))}
+        </div>
+        <Link to="/" className='btn mb-4 mt-4'>Voltar</Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default IndexStudent
+export default IndexStudent;
