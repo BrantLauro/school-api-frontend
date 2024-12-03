@@ -21,7 +21,7 @@ const Login = () => {
           validationSchema={LoginSchema}
           onSubmit={async (values, { setSubmitting }) => {
             try {
-              const result = await apiuser.post('/login', values);
+              const result = await apiuser.post('/api/auth/login', values);
               alert(result.data.message); // Exibe a mensagem de sucesso
               setSubmitting(false);
               navigate('/'); // Redireciona para a página inicial
