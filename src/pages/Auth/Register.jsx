@@ -14,9 +14,9 @@ const Register = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='w-screen h-screen bg-neutral-900 text-white'>
+    <div className='screen'>
       <div className="h-full flex flex-col justify-center items-center">
-        <h1 className='title'>Cadastro</h1>
+        <h1 className='title'>Register</h1>
         <Formik
           initialValues={{ username: '', email: '', password: '' }}
           validationSchema={RegisterSchema}
@@ -25,15 +25,15 @@ const Register = () => {
               const resultado = await apiuser.post('/register', values);
               Swal.fire({
                 icon: 'success',
-                title: 'Registro bem-sucedido',
-                text: 'Você foi registrado com sucesso!',
+                title: "Thank's for registering",
+                text: 'You are registered with success!',
               });
               setSubmitting(false);
               navigate('/login');
             } catch (error) {
               Swal.fire({
                 icon: 'error',
-                title: 'Erro no registro',
+                title: 'Error on register',
                 text: error.response?.data?.message || 'An error occurred',
               });
               setSubmitting(false);
@@ -42,27 +42,27 @@ const Register = () => {
         >
           {({ isSubmitting }) => (
             <Form className='flex flex-col'>
-              <label htmlFor="username" className='label'>Nome</label>
+              <label htmlFor="username" className='label'>Name</label>
               <Field type="text" name='username' className='input'></Field>
-              <ErrorMessage name="username"/>
+              <ErrorMessage name="username" component="div" className='text-red-500'/>
 
               <label htmlFor="email" className='label'>Email</label>
               <Field type="email" name="email" className='input'/>
-              <ErrorMessage name="email" component="div" className='text-orange-500'/>
+              <ErrorMessage name="email" component="div" className='text-red-500'/>
               
-              <label htmlFor="password" className='label'>Senha</label>
+              <label htmlFor="password" className='label'>Password</label>
               <Field type="password" name="password" className='input'/>
-              <ErrorMessage name="password" component="div" />
+              <ErrorMessage name="password" component="div" className='text-red-500'/>
 
-              <button type="submit" disabled={isSubmitting} className='btn'>
-                cadastrar
+              <button type="submit" disabled={isSubmitting} className='btn mt-3'>
+                register
               </button>
             </Form>
           )}
         </Formik>
         <p className='mt-4'>
-          Já possui cadastro? <Link to="/login" className='text-blue-500'>Faça login</Link>
-        </p>
+          Already have an account? <Link to="/login" className='text-blue-500'>Login</Link>
+        </p> 
       </div>
     </div>
   )

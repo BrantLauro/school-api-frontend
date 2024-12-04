@@ -16,7 +16,7 @@ const CreateSchool = () => {
   return (
     <div className='w-screen h-screen bg-neutral-900 text-white'>
       <div className="h-full flex flex-col justify-center items-center">
-        <h1 className='title'>Cadastrar Escola</h1>
+        <h1 className='title'>New School</h1>
         <Formik
           initialValues={{ schoolName:'', location: '', principalName: '' }}
           validationSchema={RegisterSchema}
@@ -25,15 +25,15 @@ const CreateSchool = () => {
               const result = await apischool.post('/school', values);
               Swal.fire({
                 icon: 'success',
-                title: 'Cadastro bem sucedido',
-                text: 'A escola foi cadastrada com sucesso!',
+                title: 'Success',
+                text: 'The school was registered!',
               });
               setSubmitting(false);
               navigate('/school');
             } catch (error) {
               Swal.fire({
                 icon: 'error',
-                title: 'Erro no cadastro',
+                title: 'Error',
                 text: error.response?.data?.message || 'An error occurred',
               });
               setSubmitting(false);
@@ -42,20 +42,20 @@ const CreateSchool = () => {
         >
           {({ isSubmitting }) => (
             <Form className='flex flex-col'>
-              <label htmlFor="schoolName" className='label'>Nome</label>
+              <label htmlFor="schoolName" className='label'>School Name</label>
               <Field type="text" name='schoolName' className='input'></Field>
               <ErrorMessage name="schoolName"/>
 
-              <label htmlFor="location" className='label'>Local</label>
+              <label htmlFor="location" className='label'>Location</label>
               <Field type="text" name="location" className='input'/>
-              <ErrorMessage name="location" component="div" className='text-orange-500'/>
+              <ErrorMessage name="location" component="div" className='text-red-500'/>
               
-              <label htmlFor="principalName" className='label'>Diretor(a)</label>
+              <label htmlFor="principalName" className='label'>Principal Name</label>
               <Field type="text" name="principalName" className='input'/>
               <ErrorMessage name="principalName" component="div" />
               
               <button type="submit" disabled={isSubmitting} className='btn'>
-                cadastrar
+                register
               </button>
               
             </Form>

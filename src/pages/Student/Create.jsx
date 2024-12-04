@@ -33,7 +33,7 @@ const CreateStudent = () => {
   return (
     <div className='w-screen h-screen bg-neutral-900 text-white'>
       <div className="h-full flex flex-col justify-center items-center">
-        <h1 className='title'>Register Student</h1>
+        <h1 className='title'>New Student</h1>
         <Formik
           initialValues={{ name:'', age: '', gender: '' , schoolId: '' }}
           validationSchema={RegisterSchema}
@@ -42,15 +42,15 @@ const CreateStudent = () => {
               const result = await apistudent.post('/student', values);
               Swal.fire({
                 icon: 'success',
-                title: 'Cadastro bem ucedido',
-                text: 'O estudante foi cadastrado com sucesso!',
+                title: 'Success',
+                text: 'Student registered!',
               });
               setSubmitting(false);
               navigate('/student');
             } catch (error) {
               Swal.fire({
                 icon: 'error',
-                title: 'Erro no cadastro',
+                title: 'Error',
                 text: error.response?.data?.message || 'An error occurred',
               });
               setSubmitting(false);
@@ -59,29 +59,29 @@ const CreateStudent = () => {
         >
           {({ isSubmitting }) => (
             <Form className='flex flex-col'>
-              <label htmlFor="name" className='label'>Nome</label>
+              <label htmlFor="name" className='label'>Name</label>
               <Field type="text" name='name' className='input'></Field>
-              <ErrorMessage name="name" component="div" className='text-orange-500'/>
+              <ErrorMessage name="name" component="div" className='text-red-500'/>
 
-              <label htmlFor="age" className='label'>Idade</label>
+              <label htmlFor="age" className='label'>Age</label>
               <Field type="number" name="age" className='input'/>
-              <ErrorMessage name="age" component="div" className='text-orange-500'/>
+              <ErrorMessage name="age" component="div" className='text-red-500'/>
               
-              <label htmlFor="gender" className='label'>Gênero</label>
+              <label htmlFor="gender" className='label'>Gender</label>
               <Field type="text" name="gender" className='input'/>
-              <ErrorMessage name="gender" component="div" className='text-orange-500'/>
+              <ErrorMessage name="gender" component="div" className='text-red-500'/>
 
-              <label htmlFor="schoolId" className='label'>Escola</label>
+              <label htmlFor="schoolId" className='label'>School</label>
               <Field as="select" name="schoolId" className='input'>
-                <option value="">Selecione uma escola</option>
+                <option value="">Select a school</option>
                 {schools.map(school => (
                   <option key={school.id} value={school.id}>{school.schoolName}</option>
                 ))}
               </Field>
-              <ErrorMessage name="schoolId" component="div" className='text-orange-500'/>
+              <ErrorMessage name="schoolId" component="div" className='text-red-500'/>
 
               <button type="submit" disabled={isSubmitting} className='btn'>
-                cadastrar
+                register
               </button>
             </Form>
           )}

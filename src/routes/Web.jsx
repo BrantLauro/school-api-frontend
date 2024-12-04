@@ -5,8 +5,8 @@ import CreateSchool from '../pages/School/Create';
 import CreateStudent from '../pages/Student/Create';
 import IndexSchool from '../pages/School/Index';
 import IndexStudent from '../pages/Student/Index';
-import Register from '../pages/Register/Register';
-import Login from '../pages/Login/Login';
+import Register from '../pages/Auth/Register';
+import Login from '../pages/Auth/Login';
 import PrivateRoute from './PrivateRoute';
 
 const Web = () => {

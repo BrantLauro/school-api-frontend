@@ -38,19 +38,19 @@ const IndexStudent = () => {
   return (
     <div className='w-screen h-screen bg-neutral-900 text-white'>
       <div className="h-full flex flex-col justify-center items-center">
-        <h1 className='title'>Estudantes Cadastrados</h1>
-        <Link to="/student/create" className='btn mb-4'>Cadastrar Novo Estudante</Link>
+        <h1 className='title'>Students</h1>
+        <Link to="/student/create" className='btn mb-4'>New Student</Link>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
           {students.map(student => (
-            <div key={student.id} className='card bg-gray-800 p-4 rounded-lg shadow-md'>
+            <div key={student.id} className='card bg-zinc-800 p-4 rounded-lg shadow-md'>
               <h2 className='font-bold text-xl mb-2'>{student.name}</h2>
-              <p className='text-gray-400'>Idade: {student.age}</p>
-              <p className='text-gray-400'>Gênero: {student.gender}</p>
-              <p className='text-gray-400'>Escola: {getSchoolName(student.schoolId)}</p>
+              <p className='text-gray-400'>Age: {student.age}</p>
+              <p className='text-gray-400'>Gender: {student.gender}</p>
+              <p className='text-gray-400'>School: {getSchoolName(student.schoolId)}</p>
             </div>
           ))}
         </div>
-        <Link to="/" className='btn mb-4 mt-4'>Voltar</Link>
+        <Link to="/" className='btn mb-4 mt-4'>Back</Link>
       </div>
     </div>
   );

@@ -7,21 +7,21 @@ const Home = () => {
 
   const handleLogout = () => {
     Swal.fire({
-      title: 'Você tem certeza?',
-      text: "Você será deslogado!",
+      title: 'Are you sure?',
+      text: "You will have to login again!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Sim, deslogar!',
-      cancelButtonText: 'Cancelar'
+      confirmButtonText: 'Yes, Logout!',
+      cancelButtonText: 'Cancel'
     }).then((result) => {
       if (result.isConfirmed) {
         window.localStorage.removeItem('token'); // Remove o token do localStorage
         navigate('/login'); // Redireciona para a tela de login
         Swal.fire(
-          'Deslogado!',
-          'Você foi deslogado com sucesso.',
+          'Logout!',
+          'You get logout with success.',
           'success'
         )
       }
@@ -31,9 +31,9 @@ const Home = () => {
   return (
     <div className='screen'>
       <div className="h-full flex flex-col justify-center items-center">
-        <h1 className='title'>Sistema Escolar</h1>
-        <a href="/school" className='btn mb-4 w-40 text-center'>Escolas</a>
-        <a href="/student" className='btn mb-4 w-40 text-center'>Estudantes</a>
+        <h1 className='title'>School Manager</h1>
+        <a href="/school" className='btn mb-4 w-40 text-center'>Schools</a>
+        <a href="/student" className='btn mb-4 w-40 text-center'>Students</a>
         <button onClick={handleLogout} className='btn w-40'>Logout</button>
       </div>
     </div>
