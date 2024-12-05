@@ -54,7 +54,7 @@ const Register = () => {
               <Field type="password" name="password" className='input'/>
               <ErrorMessage name="password" component="div" className='text-red-500'/>
 
-              <button type="submit" disabled={isSubmitting} className='btn mt-3'>
+              <button type="submit" disabled={isSubmitting} className='btn-green mt-3'>
                 register
               </button>
             </Form>

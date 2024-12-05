@@ -54,14 +54,17 @@ const CreateSchool = () => {
               <Field type="text" name="principalName" className='input'/>
               <ErrorMessage name="principalName" component="div" />
               
-              <button type="submit" disabled={isSubmitting} className='btn'>
-                register
-              </button>
+              <div className='inline-flex gap-2 mt-3'>
+                <button type="submit" disabled={isSubmitting} className='btn-green p-2 w-1/2'>
+                  Save
+                </button>
+                <a href="/school" class='btn-red p-2 w-1/2 text-center'>Cancel</a>
+              </div>
               
             </Form>
           )}
         </Formik>
-        <a href="/school" class='btn mb-4 mt-4 w-52 text-center'>Back</a>
+        
       </div>
     </div>
   )
