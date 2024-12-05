@@ -61,6 +61,7 @@ const CreateSchool = () => {
             </Form>
           )}
         </Formik>
+        <a href="/school" class='btn mb-4 mt-4 w-52 text-center'>Back</a>
       </div>
     </div>
   )
